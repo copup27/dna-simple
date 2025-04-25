@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA Strand by One Person Studio (Video Recreation)</title>
+
+    <!--
+       *** CREDIBILITY AND USAGE NOTE ***
+
+       Original Code Concept: DNA Strand Animation
+       Original Author/Demonstrator: "One Person Studio" (as seen in the video title/context)
+
+       This HTML file is a recreation based *solely* on the visual demonstration
+       provided in the source video clip. It attempts to faithfully reproduce the
+       HTML structure, CSS styling, and JavaScript logic shown being typed.
+
+       Ownership: No ownership of the original code or concept is claimed by the
+       creator of this specific recreation. Full credit for the design and
+       implementation shown in the video belongs to the original author ("One Person Studio").
+
+       Disclaimer: This code is provided "AS IS", without warranty of any kind,
+       express or implied. Use this code entirely at your own risk. The creator of
+       this recreation assumes no liability for any issues, damages, or consequences
+       resulting from its use or modification. Verify browser compatibility and
+       performance for your specific needs.
+    -->
+
+    <style>
+        /* Basic Reset & Setup from Video */
+        @import "https://unpkg.com/normalize.css";
+
+        *,
+        *:after,
+        *:before {
+            box-sizing: border-box;
+            transform-style: preserve-3d;
+        }
+
+        body {
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            font-family: 'Google Sans', sans-serif, system-ui;
+            transform-style: preserve-3d;
+            perspective: 100vmin;
+            background: hsl(210 80% 12%);
+        }
+
+        /* DNA Container from Video */
+        .dna {
+            height: 65vmin;
+            aspect-ratio: 2 / 5;
+            display: grid;
+            transform-origin: preserve-3d;
+            transform: rotateX(0deg);
+            rotate: 30deg;
+            gap: 0.5vmin;
+            animation: rotate 14s infinite linear;
+        }
+
+        /* Strand (Row) from Video */
+        .strand {
+            --speed: 2;
+            --delay: calc(sin(var(--index) / var(--total) * 45deg) * var(--speed) * -1s);
+            width: 100%;
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Node (Circle) from Video */
+        .strand_node {
+            --bg: white; /* Default background */
+            background: var(--bg);
+            height: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            animation: jump calc(var(--speed) * 1s) var(--delay, 0s) infinite ease-in-out;
+            border: 0.5vmin solid black;
+        }
+
+        /* Rung connecting the nodes from Video */
+        .strand::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 94%;
+            height: 30%;
+            background: white;
+            transform: translate3d(-50%, -50%, -2px);
+            transform-origin: center;
+            animation: scale calc(var(--speed) * 1s) var(--delay, 0s) infinite linear;
+            border: 0.5vmin solid black;
+        }
+
+        /* Orbiting inner dot from Video */
+        .strand_node::after {
+            content: "";
+            height: 15%;
+            aspect-ratio: 1;
+            background: var(--bg, white); /* Use node color */
+            position: absolute;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg) translate(450%);
+            animation: orbit calc(var(--speed) * 0.35s) var(--delay, 0s) infinite linear;
+        }
+
+        /* Destination points from Video */
+        .strand_node:first-of-type {
+             /* Calculation from video */
+            --destination: calc((65vmin * (2 / 5)) - 100%);
+        }
+        .strand_node:last-of-type {
+             /* Calculation and direction from video */
+            --destination: calc(((65vmin * (2 / 5)) - 100%) * -1);
+            animation-direction: reverse;
+        }
+
+        /* Keyframe Animations from Video */
+         @keyframes rotate {
+              to { transform: rotateY(360deg); }
+         }
+
+        @keyframes scale {
+            /* Scale animation for the rung */
+            25%, 75% { transform: translate3d(-50%, -50%, -2px) scaleX(0); }
+            0%, 50%, 100% { transform: translate3d(-50%, -50%, -2px) scaleX(1); }
+        }
+
+        @keyframes orbit {
+            /* Orbit animation for the inner dot */
+            100% { transform: translate(-50%, -50%) rotate(360deg) translate(450%); }
+        }
+
+        @keyframes jump {
+             /* Jump animation for nodes, including subtle Z movement from video */
+             25% { transform: translate(0, 0, 1px); }
+             50% { transform: translateX(var(--destination)); }
+             75% { transform: translate(0, 0, -1px); }
+             /* 0% and 100% default to transform: none */
+        }
+
+    </style>
+<!-- CJisAwesome -->
+</head>
+<body>
+    <!-- HTML structure exactly from video -->
+    <div class="dna" style="--total: 13;">
+        <div class="strand" style="--index: 1;"> <div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 2;"> <div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 3;"> <div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 4;"> <div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 5;"> <div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 6;"> <div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 7;"> <div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 8;"> <div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 9;"> <div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 10;"><div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 11;"><div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 12;"><div class="strand_node"></div><div class="strand_node"></div> </div>
+        <div class="strand" style="--index: 13;"><div class="strand_node"></div><div class="strand_node"></div> </div>
+    </div>
+
+    <script>
+        // Fallback JS exactly from video (final version)
+        if (!CSS.supports('top: calc(sin(1) * 1px)')) {
+            console.log("Browser does not support sin() in CSS calc(). Applying JS fallback for delays.");
+            const STRANDS = [...document.querySelectorAll('.strand')];
+            const TOTAL_STRANDS = parseInt(document.querySelector('.dna').style.getPropertyValue('--total') || STRANDS.length);
+            const SPEED = 2;
+
+            for (let s = 0; s < STRANDS.length; s++) {
+                const index = parseInt(STRANDS[s].style.getPropertyValue('--index'));
+                if (!isNaN(index)) {
+                    const DELAY = Math.sin(((Math.PI / 180) * 45) * (index / TOTAL_STRANDS));
+                    STRANDS[s].style.setProperty('--delay', `${DELAY * SPEED * -1}s`);
+                }
+            }
+        } else {
+             console.log("Browser supports sin() in CSS calc(). Delays handled by CSS.");
+        }
+
+        // Set random colors JS exactly from video
+        const COLORS = [
+            'hsl(44, 98%, 68%)',
+            'hsl(197, 50%, 44%)',
+            'hsl(300, 100%, 100%)', // Video used white here
+            'hsl(331, 76%, 50%)'
+         ];
+        const NODES = document.querySelectorAll('.strand_node');
+
+        NODES.forEach(NODE => {
+            // Set the --bg property to a random color from the list
+            NODE.style.setProperty('--bg', COLORS[Math.floor(Math.random() * COLORS.length)]);
+        });
+    </script>
+
+</body>
+</html>
